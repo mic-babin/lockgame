@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lock Combo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <h1>JQuery Combination Lock Guess Game</h1>
+  <div id="start" class="btn">Start</div>
+
+  <div id="output">
+    <small>message</small>
+    <input type="number" name="lock1" min="0" max="9">
+    <input type="number" name="lock2" min="0" max="9">
+    <input type="number" name="lock3" min="0" max="9">
+    <div class="btn" id="checkLock">Open Lock &#128274;</div>
+  </div>
+
+  <div id="rules">
+    <ul>
+      <li>1. You must guess the right combination for the lock in the least amount of try;</li>
+      <li>2. Each number varies between 0 and 9;</li>
+      <li>3. If the number is blue, your guess is too high, pick a lower number;</li>
+      <li>4. If the number is red, your guess is too low, pick a higher number;</li>
+      <li>5. If the number is Green, your guess is right.</li>
+    </ul>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  </script>
+  <script src="app.js">
+
+  </script>
+</body>
+
+</html>
