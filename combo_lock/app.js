@@ -4,8 +4,11 @@ $(document).ready(function () {
   $('#start').click(startGame);
   $('#checkLock').click(openLock);
 
+  $('#checkLock').click(Count);
+
   // Functions
   function startGame() {
+    count = 0;
     ourSecretNum = Math.floor(Math.random() * (999 - 100 + 1) + 100).toString();
     $('#start').hide();
     $('#rules').hide();
@@ -13,7 +16,9 @@ $(document).ready(function () {
     for (x = 0; x < $('input[type="number"]').length; x++) {
       $('input[type="number"]').eq(x).val('5');
     }
-    $('small').html('Red is too low. <br><br> Blue is too high.');
+    $('small').html('Red is too low. <br><br> Blue is too high. <br><br> You have tried <span id="showCount"></span> times.');
+
+    return count;
   }
 
   function openLock() {
@@ -30,7 +35,7 @@ $(document).ready(function () {
     }
     if (win == 3) {
       $('#start').show();
-      $('small').html('Congratulation! You win!<br> The right number is ' + ourSecretNum + '<br>Click \'Start\' to play again.')
+      $('small').html('Congratulation! You win!<br> The right number is ' + ourSecretNum + '<br>Click \'Start\' to play again. <br> You have tried <span id="showCount"></span> times.')
     }
   }
 
@@ -50,6 +55,12 @@ $(document).ready(function () {
       response.backgrd = 'green';
     }
     return response;
+  }
+
+  function Count() {
+    count++;
+    $('#showCount').text(count);
+    return false;
   }
 
   // CSS Styling
