@@ -1,0 +1,183 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Memory Game</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: rgb(185, 185, 185);
+    }
+
+    .gamearea {
+      max-width: 600px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-gap: 0.5rem;
+      margin: 5rem auto;
+    }
+
+    .card {
+      float: left;
+      margin: 10px;
+      height: 200px;
+      width: 150px;
+      background: lightblue;
+      text-align: center;
+      border-radius: 5px;
+      box-shadow: 10px 10px 10px #ccc;
+    }
+
+    .card:hover {
+      cursor: pointer;
+      border: 3px solid blue;
+    }
+
+    .card p {
+      margin-top: 68px;
+      font-size: 48px;
+      color: blue;
+    }
+
+    .btn {
+      color: black;
+      padding: 1rem;
+      background: #ccc;
+      border-radius: 3px;
+      max-width: 150px;
+      margin: 7rem auto;
+      text-align: center;
+      box-shadow: 1px 1px 3px #000;
+      font-size: 2rem;
+    }
+
+    h1 {
+      color: #333;
+      font-size: 4rem;
+      padding: 1rem 3rem;
+      margin: auto;
+      text-align: center;
+      margin-top: 12vh;
+    }
+
+    #gameTitle {
+      font-size: 5rem;
+      padding: 1rem;
+      background-color: #333;
+      color: white;
+      box-shadow: 1px 1px 3px #000;
+      max-width: 600px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 id="gameTitle">Card Memory Game</h1>
+  <div class="container">
+    <div class="gamearea">
+      <div class="card unmatched"></div>
+      <div class="card unmatched"></div>
+      <div class="card unmatched"></div>
+      <div class="card unmatched"></div>
+      <div class="card unmatched"></div>
+      <div class="card unmatched"></div>
+      <div class="card unmatched"></div>
+      <div class="card unmatched"></div>
+      <div class="card unmatched"></div>
+      <div class="card unmatched"></div>
+      <div class="card unmatched"></div>
+      <div class="card unmatched"></div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.js" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function () {
+
+      const app = {
+        cards: [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6],
+
+        init: function () {
+          app.shuffle();
+          // $('#reLoad').hide();
+        },
+
+        shuffle: function () {
+          var random = 0;
+          var temp = 0;
+          for (i = 1; i < app.cards.length; i++) {
+            random = Math.round(Math.random() * i);
+            temp = app.cards[i];
+            app.cards[i] = app.cards[random];
+            app.cards[random] = temp;
+          }
+
+          app.assignCards();
+          console.log("Shuffled Card Array: " +
+            app.cards);
+        },
+
+        assignCards: function () {
+          $('.card').each(function (index) {
+            $(this).attr('data-card-value', app.cards[index]);
+          });
+          app.clickHandlers();
+        },
+
+        clickHandlers: function () {
+          $('.card').on('click', function () {
+            $(this).html('<p>' + $(this).data('cardValue') + '</p>').addClass('selected');
+            app.checkMatch();
+          });
+        },
+
+        checkMatch: function () {
+          if ($('.selected').length === 2) {
+            if ($('.selected').first().data('cardValue') == $('.selected').last().data('cardValue')) {
+              $('.selected').each(function () {
+                $(this).animate({
+                  opacity: 0
+                }).removeClass('unmatched');
+              });
+              $('.selected').each(function () {
+                $(this).removeClass('selected');
+              });
+              app.checkWin();
+            } else {
+              setTimeout(function () {
+                $('.selected').each(function () {
+                  $(this).html('').removeClass('selected');
+                })
+              }, 1500);
+            }
+
+
+          }
+          if ($('.selected').length === 3) {
+            alert("You can't select more than two card at a time");
+          }
+        },
+
+        checkWin: function () {
+          if ($('.unmatched').length === 0) {
+            $('.container').html('<h1>You won!</h1><div id="reLoad" class="btn">Play again</div>');
+            $('#reLoad').click(function () {
+              location.reload();
+            });
+          }
+        }
+      };
+      app.init();
+      $('#reLoad').click(function () {
+        location.reload();
+      });
+    });
+  </script>
+</body>
+
+</html>

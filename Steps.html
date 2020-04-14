@@ -1,0 +1,58 @@
+<html>
+
+<head>
+  <title>jQuery Complete Course</title>
+</head>
+
+<body>
+  <h1>Welcome to jQuery Course</h1>
+  <a href="http://www.google.com">Google</a>
+  <form>
+    <div class="content">
+      <div class="step">
+        <h1>First</h1>
+        This is the first Page
+        <div>
+          <a href="#">Next</a>
+        </div>
+      </div>
+      <div class="step hiddenStep">
+        <h1>Second</h1>
+        This is the second Page
+        <div>
+          <a href="#">Next</a>
+        </div>
+      </div>
+      <div class="step hiddenStep">
+        <h1>Third</h1>
+        This is the third Page
+        <div>
+          <a href="#">Next</a>
+        </div>
+      </div>
+    </div>
+  </form>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $('.hiddenStep').css('display', 'none');
+      $('a[href="#"]').click(function (e) {
+        e.preventDefault();
+        const shownDiv = $(this).closest('.step');
+        const mainContent = $('.content>.step');
+        const index = mainContent.index(shownDiv) + 1;
+        shownDiv.css('display', 'none');
+        mainContent.eq(index).css('display', 'block');
+      })
+
+    })
+
+
+
+
+
+    $('h1').first().css('display', 'none')
+  </script>
+</body>
+
+</html>
